@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Deep Learning Income Model - Interactive AI Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Chart.js for Live Data Visualizations -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+  <div class="app-container">
+    <!-- Navbar Header -->
+    <header class="navbar">
+      <div class="brand">
+        <div class="brand-icon">🧠</div>
+        <div class="brand-title">
+          <h1>Deep Learning Income Predictor</h1>
+          <p>Keras Sequential Neural Network Model</p>
+        </div>
+      </div>
+      <div class="header-badges">
+        <span class="badge badge-cyan">⚡ Real-Time JS Inference</span>
+        <span class="badge badge-purple">🎯 ROC-AUC: 0.905</span>
+        <span class="badge badge-cyan">📊 Accuracy: 81.3%</span>
+      </div>
+    </header>
+
+    <!-- Main Grid Layout -->
+    <div class="dashboard-grid">
+
+      <!-- Left Panel: Interactive Inputs & Controls -->
+      <aside class="control-panel">
+        <div class="panel-header">
+          <h2 class="panel-title">
+            <span>⚙️</span> Interactive Profile Controls
+          </h2>
+          <button id="btnReset" class="btn-reset" title="Reset to Defaults">Reset Inputs</button>
+        </div>
+
+        <!-- Preset Quick-Load Profiles -->
+        <div class="presets-section">
+          <p>Quick Load Presets</p>
+          <div class="preset-chips">
+            <button class="chip-btn" data-preset="executive">👔 Senior Executive</button>
+            <button class="chip-btn" data-preset="tech">💻 Tech Specialist</button>
+            <button class="chip-btn" data-preset="entrepreneur">🚀 Entrepreneur</button>
+            <button class="chip-btn" data-preset="student">🎓 Student / Entry</button>
+          </div>
+        </div>
+
+        <form id="incomeForm" onsubmit="return false;">
+          <div class="input-section">
+            <span class="section-label">👤 Demographics</span>
+
+            <!-- Age Slider -->
+            <div class="input-group">
+              <div class="input-label-row">
+                <label for="ageInput">Age</label>
+                <span id="ageVal" class="input-value-badge">38 yrs</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" id="ageInput" class="custom-range" min="17" max="90" value="38">
+              </div>
+            </div>
+
+            <!-- Gender & Race -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="input-group">
+                <label for="sexInput">Gender</label>
+                <select id="sexInput" class="custom-select">
+                  <option value="Male" selected>Male</option>
+                  <option value="Female">Female</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="raceInput">Race</label>
+                <select id="raceInput" class="custom-select">
+                  <option value="White" selected>White</option>
+                  <option value="Asian-Pac-Islander">Asian / Pac-Islander</option>
+                  <option value="Black">Black</option>
+                  <option value="Amer-Indian-Eskimo">Amer-Indian / Eskimo</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Native Country -->
+            <div class="input-group">
+              <label for="countryInput">Native Country</label>
+              <select id="countryInput" class="custom-select">
+                <option value="United-States" selected>United States</option>
+                <option value="Canada">Canada</option>
+                <option value="Germany">Germany</option>
+                <option value="England">England</option>
+                <option value="India">India</option>
+                <option value="Philippines">Philippines</option>
+                <option value="Mexico">Mexico</option>
+                <option value="Japan">Japan</option>
+                <option value="Other">Other Country</option>
+              </select>
+            </div>
+
+            <span class="section-label" style="margin-top: 12px;">🎓 Education & Occupation</span>
+
+            <!-- Education & Education Num Sync -->
+            <div class="input-group">
+              <div class="input-label-row">
+                <label for="educationInput">Education Level</label>
+                <span id="eduNumVal" class="input-value-badge">Grade: 13 (Bachelors)</span>
+              </div>
+              <select id="educationInput" class="custom-select">
+                <option value="Doctorate" data-num="16">Doctorate (PhD)</option>
+                <option value="Prof-school" data-num="15">Prof-school (MD/JD)</option>
+                <option value="Masters" data-num="14">Masters Degree</option>
+                <option value="Bachelors" data-num="13" selected>Bachelors Degree</option>
+                <option value="Assoc-acdm" data-num="12">Assoc-acdm</option>
+                <option value="Assoc-voc" data-num="11">Assoc-voc</option>
+                <option value="Some-college" data-num="10">Some College</option>
+                <option value="HS-grad" data-num="9">High School Grad</option>
+                <option value="12th" data-num="8">12th Grade</option>
+                <option value="11th" data-num="7">11th Grade</option>
+                <option value="10th" data-num="6">10th Grade</option>
+                <option value="9th" data-num="5">9th Grade</option>
+                <option value="7th-8th" data-num="4">7th-8th Grade</option>
+                <option value="5th-6th" data-num="3">5th-6th Grade</option>
+                <option value="1st-4th" data-num="2">1st-4th Grade</option>
+                <option value="Preschool" data-num="1">Preschool</option>
+              </select>
+            </div>
+
+            <!-- Occupation -->
+            <div class="input-group">
+              <label for="occupationInput">Occupation</label>
+              <select id="occupationInput" class="custom-select">
+                <option value="Exec-managerial" selected>Executive / Managerial</option>
+                <option value="Prof-specialty">Professional Specialty</option>
+                <option value="Tech-support">Tech Support</option>
+                <option value="Sales">Sales Specialist</option>
+                <option value="Craft-repair">Craft & Repair</option>
+                <option value="Adm-clerical">Administrative / Clerical</option>
+                <option value="Machine-op-inspct">Machine Operator / Inspector</option>
+                <option value="Transport-moving">Transport & Moving</option>
+                <option value="Handlers-cleaners">Handlers & Cleaners</option>
+                <option value="Other-service">Other Service</option>
+                <option value="Farming-fishing">Farming & Fishing</option>
+                <option value="Protective-serv">Protective Service</option>
+              </select>
+            </div>
+
+            <!-- Workclass & Marital Status -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="input-group">
+                <label for="workclassInput">Work Class</label>
+                <select id="workclassInput" class="custom-select">
+                  <option value="Private" selected>Private Firm</option>
+                  <option value="Self-emp-inc">Self-Emp (Inc)</option>
+                  <option value="Self-emp-not-inc">Self-Emp (Not Inc)</option>
+                  <option value="Federal-gov">Federal Gov</option>
+                  <option value="Local-gov">Local Gov</option>
+                  <option value="State-gov">State Gov</option>
+                  <option value="Without-pay">Without Pay</option>
+                </select>
+              </div>
+              <div class="input-group">
+                <label for="maritalInput">Marital Status</label>
+                <select id="maritalInput" class="custom-select">
+                  <option value="Married-civ-spouse" selected>Married (Spouse)</option>
+                  <option value="Never-married">Never Married</option>
+                  <option value="Divorced">Divorced</option>
+                  <option value="Separated">Separated</option>
+                  <option value="Widowed">Widowed</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Hours Per Week Slider -->
+            <div class="input-group">
+              <div class="input-label-row">
+                <label for="hoursInput">Weekly Work Hours</label>
+                <span id="hoursVal" class="input-value-badge">40 hrs/wk</span>
+              </div>
+              <div class="slider-container">
+                <input type="range" id="hoursInput" class="custom-range" min="1" max="99" value="40">
+              </div>
+            </div>
+
+            <span class="section-label" style="margin-top: 12px;">💰 Financial Gains & Capital</span>
+
+            <!-- Capital Gain & Loss -->
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+              <div class="input-group">
+                <label for="gainInput">Capital Gain ($)</label>
+                <input type="number" id="gainInput" class="custom-input" min="0" max="99999" value="0" step="500">
+              </div>
+              <div class="input-group">
+                <label for="lossInput">Capital Loss ($)</label>
+                <input type="number" id="lossInput" class="custom-input" min="0" max="4356" value="0" step="100">
+              </div>
+            </div>
+          </div>
+        </form>
+      </aside>
+
+      <!-- Right Display Panel: Live Prediction & Dynamic Charts -->
+      <main class="display-panel">
+
+        <!-- Primary Hero Prediction Card -->
+        <section class="hero-result-card">
+          <!-- Animated Donut Gauge -->
+          <div class="gauge-wrapper">
+            <canvas id="gaugeCanvas" class="gauge-canvas"></canvas>
+            <div class="gauge-center-text">
+              <div id="gaugePercentage" class="gauge-percentage">78.5%</div>
+              <div class="gauge-sublabel">Prob > $50K</div>
+            </div>
+          </div>
+
+          <!-- Hero Details -->
+          <div class="result-info">
+            <div id="predictionTag" class="prediction-tag tag-high">
+              <span>●</span> Predicted Income: > $50,000 / year
+            </div>
+            <h2 id="predictionTitle" class="prediction-title">High Income Probability</h2>
+            <p id="predictionDesc" class="prediction-desc">
+              Based on the deep learning neural network analysis, this profile demonstrates strong financial indicators characteristic of high earners ($>50,000/\text{year}$).
+            </p>
+
+            <div class="confidence-bar-wrapper">
+              <div class="confidence-header">
+                <span>Model Confidence</span>
+                <span id="confidenceText">High Confidence</span>
+              </div>
+              <div class="confidence-track">
+                <div id="confidenceFill" class="confidence-fill"></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Dynamic Charts 2x2 Grid -->
+        <section class="charts-grid">
+          <!-- Chart 1: Feature Sensitivity & Impact Radar -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3 class="chart-card-title">
+                <span>🎯</span> Profile vs Benchmark Radar
+              </h3>
+            </div>
+            <div class="chart-container-box">
+              <canvas id="radarChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 2: What-If Scenario Optimizer -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3 class="chart-card-title">
+                <span>📈</span> "What-If" Scenario Simulation
+              </h3>
+            </div>
+            <div class="chart-container-box">
+              <canvas id="scenarioChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 3: Feature Impact Breakdown Waterfall -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3 class="chart-card-title">
+                <span>⚡</span> Top Model Driving Factors
+              </h3>
+            </div>
+            <div class="chart-container-box">
+              <canvas id="waterfallChart"></canvas>
+            </div>
+          </div>
+
+          <!-- Chart 4: Census Income Distribution by Education -->
+          <div class="chart-card">
+            <div class="chart-card-header">
+              <h3 class="chart-card-title">
+                <span>📊</span> High-Income Probability by Education
+              </h3>
+            </div>
+            <div class="chart-container-box">
+              <canvas id="eduBarChart"></canvas>
+            </div>
+          </div>
+        </section>
+
+        <!-- Bottom Smart Insights & Guidance Card -->
+        <section class="advice-card">
+          <div class="advice-header">
+            <span>💡</span> AI Model Insights & Income Improvement Strategy
+          </div>
+          <div class="advice-list">
+            <div class="advice-item">
+              <div class="advice-icon">🎓</div>
+              <div class="advice-text">
+                <h4>Education Multiplier</h4>
+                <p>Advancing from High School to a Bachelors or Masters degree increases high-income probability by an estimated +35% to +48% in the model.</p>
+              </div>
+            </div>
+            <div class="advice-item">
+              <div class="advice-icon">💼</div>
+              <div class="advice-text">
+                <h4>Occupational Role Leverage</h4>
+                <p>Executive, Managerial, and Professional Specialty roles contribute the strongest positive weights toward exceeding the $50K annual threshold.</p>
+              </div>
+            </div>
+            <div class="advice-item">
+              <div class="advice-icon">📈</div>
+              <div class="advice-text">
+                <h4>Capital Investment Impact</h4>
+                <p>Recorded capital gains above $7,000 strongly shift predictions into the top income bracket due to asset accumulation indicators.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+      </main>
+
+    </div>
+  </div>
+
+  <!-- JS Engine & App Logic Scripts -->
+  <script src="nn_engine.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
